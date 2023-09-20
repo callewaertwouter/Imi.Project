@@ -361,3 +361,5 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+/Imi.Project.Mobile/Imi.Project.Mobile/App.xaml.cs
+/Imi.Project.Mobile/Imi.Project.Mobile/App.xaml
