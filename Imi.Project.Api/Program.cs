@@ -1,5 +1,9 @@
 using Imi.Project.Api.Core.Entities;
+using Imi.Project.Api.Core.Infrastructure;
+using Imi.Project.Api.Core.Services;
+using Imi.Project.Api.Core.Services.Interfaces;
 using Imi.Project.Api.Infrastructure.Data;
+using Imi.Project.Api.Infrastructure.Repositories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -13,6 +17,14 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<RecipesDbContext>(options =>
 options.UseSqlServer(builder.Configuration.GetConnectionString
 ("DefaultConnection")));
+
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IRecipeRepository, RecipeRepository>();
+builder.Services.AddScoped<IIngredientRepository, IngredientRepository>();
+
+builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IIngredientService, IngredientService>();
+builder.Services.AddScoped<IRecipeService, RecipeService>();
 
 // Identity configuration
 builder.Services.AddIdentity<User, IdentityRole>(options => {
