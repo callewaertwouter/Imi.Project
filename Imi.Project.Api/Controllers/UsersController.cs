@@ -18,16 +18,19 @@ namespace Imi.Project.Api.Controllers;
 public class UsersController : ControllerBase
 {
     protected readonly IUserRepository _userRepository;
+    protected readonly IRecipeRepository _recipeRepository;
     private readonly UserManager<User> _userManager;
     private readonly IConfiguration _configuration;
     private readonly SignInManager<User> _signInManager;
 
     public UsersController(IUserRepository userRepository,
+                           IRecipeRepository recipeRepository,
                            IConfiguration configuration,
                            UserManager<User> userManager,
                            SignInManager<User> signInManager)
     {
         _userRepository = userRepository;
+        _recipeRepository = recipeRepository;
         _userManager = userManager;
         _signInManager = signInManager;
         _configuration = configuration;
@@ -127,6 +130,14 @@ public class UsersController : ControllerBase
         return token;
     }
 
+    [HttpGet("api/auth/logout")]
+    public async Task<IActionResult> Logout()
+    {
+        await _signInManager.SignOutAsync();
+
+        return Ok("User successfully logged out.");
+    }
+
     [HttpGet]
     public async Task<IActionResult> Get()
     {
@@ -159,5 +170,44 @@ public class UsersController : ControllerBase
         };
 
         return Ok(userDto);
+    }
+
+    // No Add-function because Register-function already does that.
+
+    [HttpPut]
+    public async Task<IActionResult> Update(UserRequestDto userDto)
+    {
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(ModelState.Values);
+        }
+
+        var userEntity = await _userRepository.GetByIdAsync(userDto.Id);
+
+        if (userEntity == null)
+        {
+            return NotFound($"No user with an id of {userDto.Id}.");
+        }
+
+        userEntity.Email = userDto.Email;
+
+        await _userRepository.UpdateAsync(userEntity);
+
+        return Ok("User successfully updated.");
+    }
+
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> Delete(Guid id)
+    {
+        var userEntity = await _userRepository.GetByIdAsync(id);
+
+        if (userEntity == null)
+        {
+            return NotFound($"No user with an id of {id}.");
+        }
+
+        await _userRepository.DeleteAsync(userEntity);
+
+        return Ok("User successfully deleted. Farewell!");
     }
 }
