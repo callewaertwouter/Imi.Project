@@ -26,13 +26,14 @@ public class RecipesController : ControllerBase
         var recipes = await _recipeRepository.ListAllAsync();
         var recipesDto = recipes.Select(r => new RecipeResponseDto
         {
+            Id = r.Id,
             Title = r.Title,
             Description = r.Description,
-            MadeByUser = new UserResponseDto() 
+            MadeByUser = new ControllerUserResponseDto
             {
                 Email = r.User.Email
             },
-            Ingredients = r.Ingredients.Select(i => new IngredientResponseDto
+            Ingredients = r.Ingredients.Select(i => new ControllerIngredientResponseDto
             {
                 Name = i.Name,
                 Quantity = i.Quantity,
