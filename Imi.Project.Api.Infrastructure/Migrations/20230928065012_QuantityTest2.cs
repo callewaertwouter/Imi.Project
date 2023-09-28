@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Imi.Project.Api.Infrastructure.Migrations
 {
-    public partial class DataSeeding : Migration
+    public partial class QuantityTest2 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -217,8 +217,8 @@ namespace Imi.Project.Api.Infrastructure.Migrations
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
                 values: new object[,]
                 {
-                    { "00000000-0000-0000-0000-000000000001", "fe2f3206-c3b3-41fd-902b-888f1edf2c93", "Admin", "ADMIN" },
-                    { "00000000-0000-0000-0000-000000000002", "b854951c-2780-4697-a074-b7ad641f5991", "User", "USER" }
+                    { "00000000-0000-0000-0000-000000000001", "fda4e305-450d-4b07-a007-38678906e5b4", "Admin", "ADMIN" },
+                    { "00000000-0000-0000-0000-000000000002", "ea08860d-4e81-4a8d-bc69-ff9b5f47f30a", "User", "USER" }
                 });
 
             migrationBuilder.InsertData(
@@ -226,16 +226,16 @@ namespace Imi.Project.Api.Infrastructure.Migrations
                 columns: new[] { "Id", "AccessFailedCount", "ConcurrencyStamp", "Email", "EmailConfirmed", "HasApprovedTermsAndConditions", "LockoutEnabled", "LockoutEnd", "NormalizedEmail", "NormalizedUserName", "PasswordHash", "PhoneNumber", "PhoneNumberConfirmed", "SecurityStamp", "TwoFactorEnabled", "UserName" },
                 values: new object[,]
                 {
-                    { "00000000-0000-0000-0000-000000000001", 0, "fd1791a4-de29-4cb6-a1c9-76a240a2f5e5", "user@imi.be", true, true, false, null, "USER@IMI.BE", "IMIUSER", "AQAAAAEAACcQAAAAEAItGMp8D722VqakNMRzJlD1R3w4/DJFTSk3Vtx0CLzgRjBUBw0ByDXuIaTAmZ5cpQ==", null, false, "097d486b-9b22-4ef9-9158-b7b359e213eb", false, "ImiUser" },
-                    { "00000000-0000-0000-0000-000000000002", 0, "be024afa-cbec-422c-8c56-b85de938aa7b", "refuser@imi.be", true, false, false, null, "REFUSER@IMI.BE", "IMIREFUSER", "AQAAAAEAACcQAAAAEGXbYefMWVfl7p4hk9u2tWRsWaWAGI7bMDnRBVuHC1tQivjCvCHHAwxC2Yfwd4o4zA==", null, false, "8fe28202-9376-4e83-84b2-1842c7e8dacc", false, "ImiRefuser" },
-                    { "00000000-0000-0000-0000-000000000003", 0, "a73cbed5-370d-4089-9132-887f6f3008a8", "admin@imi.be", true, false, false, null, "ADMIN@IMI.BE", "IMIADMIN", "AQAAAAEAACcQAAAAEALZqjqn5Q+Z7q9OFQ/6QERJUGC8abmJalBh8fe3imU5aWVu+UOIhYa0oVKTPLKbYw==", null, false, "42f2f883-48a8-45b0-acbd-1e76e24bad86", false, "ImiAdmin" },
-                    { "00000000-0000-0000-0000-000000000004", 0, "ae9c9acb-8e1c-48c0-aedd-037923cd609d", "woutercallewaert@gmail.com", true, true, false, null, "WOUTERCALLEWAERT@GMAIL.COM", "YUSIFER", "AQAAAAEAACcQAAAAEG+s6B8xyR7RxqU7/UgYWrYErzbsZsDiVQc3AS30C2piof2qRPb+l/8efPbT2i0wqg==", null, false, "8f0baa5f-2f8b-4508-8c52-2eb40d192b6f", false, "Yusifer" },
-                    { "00000000-0000-0000-0000-000000000005", 0, "fbd10e80-9c43-45eb-a08b-c0d0bbca78cf", "alice@example.com", true, true, false, null, "ALICE@EXAMPLE.COM", "ALICE", "AQAAAAEAACcQAAAAEEEoWElsyJUsTrQ4nkfVXM4wxZza0paG2pvcPDFuWMKERh0BbIuwnv+hlCoKgYGlzg==", null, false, "14e7962c-8d2f-41d0-877a-46dcf80cff87", false, "Alice" },
-                    { "00000000-0000-0000-0000-000000000006", 0, "8263387b-3fe0-46a5-856c-6f2412b27a59", "bob@example.com", true, true, false, null, "BOB@EXAMPLE.COM", "BOB", "AQAAAAEAACcQAAAAEGTO3CQTqNMFUcKKyOobRLleaNr0GAt/CjKyRl9xiqS5jeIT7Lj22j0qo3H25mSSsg==", null, false, "df102975-1f02-4ded-a50b-786fedb07e2f", false, "Bob" },
-                    { "00000000-0000-0000-0000-000000000007", 0, "17fe93aa-dd5f-4e1f-a8fe-8c204b45ace0", "charlie@example.com", true, true, false, null, "CHARLIE@EXAMPLE.COM", "CHARLIE", "AQAAAAEAACcQAAAAENxubj/lXArVsxfamZuHgLeGTOkn/D2CPvqIgWMzrNZCcgAXwxVQuIU7LMO+beurag==", null, false, "6993e4b4-9786-4406-810b-c9bd2e94cd0c", false, "Charlie" },
-                    { "00000000-0000-0000-0000-000000000008", 0, "62e84d10-6f6d-4d1e-9d5f-dbd702570577", "david@example.com", true, true, false, null, "DAVID@EXAMPLE.COM", "DAVID", "AQAAAAEAACcQAAAAEIA9UCIXJWdcPztOgOhUnUQAsJiQoD2a7zD91D3aA/cO6/SoDmIdz5k0CUODKnvlwQ==", null, false, "8b6e0c1b-58cd-4d4c-b0ff-4645c2ae67f5", false, "David" },
-                    { "00000000-0000-0000-0000-000000000009", 0, "5011202a-b3e4-489a-86a9-2bbefbef3376", "eva@example.com", true, true, false, null, "EVA@EXAMPLE.COM", "EVA", "AQAAAAEAACcQAAAAEH79zOhmcmDxA0F/dSp8Gl86izJhBH9FfgK/uh7jeG7pAAFYtgzJWfLqflf2w6sGaw==", null, false, "1cdb5813-e0fd-487b-b4b0-a5e40c03b493", false, "Eva" },
-                    { "00000000-0000-0000-0000-000000000010", 0, "fb940d97-ec0f-4e61-8bd4-51f113851289", "fiona@example.com", true, true, false, null, "FIONA@EXAMPLE.COM", "FIONA", "AQAAAAEAACcQAAAAELs4mIEI27mtF4EGXsY+8dxuaRCdzaygrlLZcKD4Za9n6loOKvWivifK126Qhpunhw==", null, false, "f451ba09-571c-49e3-89d3-65ca0724bc74", false, "Fiona" }
+                    { "00000000-0000-0000-0000-000000000001", 0, "11b3e8bf-c561-4408-8548-161331b892bb", "user@imi.be", true, true, false, null, "USER@IMI.BE", "IMIUSER", "AQAAAAEAACcQAAAAEEaBwZcEWhyza4SybBAD1Axiw9B7MTbKKnbv/EmD6BD04NbpfkkCKvw2Hyzqhi5b7w==", null, false, "ac0474a2-b76d-4701-be54-5fce7ee5a53c", false, "ImiUser" },
+                    { "00000000-0000-0000-0000-000000000002", 0, "5039c966-0e71-4f9b-8d2d-41aaeeda5a78", "refuser@imi.be", true, false, false, null, "REFUSER@IMI.BE", "IMIREFUSER", "AQAAAAEAACcQAAAAEPDjZGDN9rkPA5WNvZp5ymLQg7J6xIk+HeRmzPpazBvfMwebgreDBMuYwvR7g2eI7w==", null, false, "73d841b6-1284-4e6f-b417-3c7eea01453d", false, "ImiRefuser" },
+                    { "00000000-0000-0000-0000-000000000003", 0, "c8d0a58b-947a-48c3-ab79-51888a7ac0c6", "admin@imi.be", true, false, false, null, "ADMIN@IMI.BE", "IMIADMIN", "AQAAAAEAACcQAAAAEPNbQ0jof5fKNWg4VYEvwIU0lcedoVjdaRoGacH1ypJtMmuV7AiGSq9V8POH3Z7Ixw==", null, false, "f17faf8b-3985-4670-ba77-4a127cf0ca55", false, "ImiAdmin" },
+                    { "00000000-0000-0000-0000-000000000004", 0, "aa6d6b75-ab20-47bc-957e-e80dd781da3c", "woutercallewaert@gmail.com", true, true, false, null, "WOUTERCALLEWAERT@GMAIL.COM", "YUSIFER", "AQAAAAEAACcQAAAAEF60+L9RlH0dmXlGeTuVy2muVn+TdEMB27CoEcK7J84COFdqLfW3gT6g0S4G3jGUSw==", null, false, "a18189e0-67d1-42e3-9336-77821da7b386", false, "Yusifer" },
+                    { "00000000-0000-0000-0000-000000000005", 0, "da76a27a-6f33-4261-a23a-d1215d792a7a", "alice@example.com", true, true, false, null, "ALICE@EXAMPLE.COM", "ALICE", "AQAAAAEAACcQAAAAEApq2SItojC7iZh/AStWq8GWRtqu9kBIMZr5UeurDTJdAWTaWE683/MF9wrpnzabeQ==", null, false, "ff046e96-ffff-4232-8915-408baae729e8", false, "Alice" },
+                    { "00000000-0000-0000-0000-000000000006", 0, "82fd7b27-ebb6-4f67-91ea-5ac430291349", "bob@example.com", true, true, false, null, "BOB@EXAMPLE.COM", "BOB", "AQAAAAEAACcQAAAAEPi9ZJOC4mornxALLQ02Z3e9tTIZtKejCc1Z45fIhaku1HH76WCb2ClWUzHsKT27TQ==", null, false, "b705058f-ae16-48aa-a9e9-70642e8e165c", false, "Bob" },
+                    { "00000000-0000-0000-0000-000000000007", 0, "3e5df598-d4f6-46bb-9e20-97007e4fee97", "charlie@example.com", true, true, false, null, "CHARLIE@EXAMPLE.COM", "CHARLIE", "AQAAAAEAACcQAAAAEJGdEGmLVpxhXRxZ8Zx5U89M4qq/8cabWseyJ9UPdLqZ8Ey/fZkesjhIBKqPmOlRXQ==", null, false, "df88f3c7-7d88-4815-8bb6-0b9db1bd05bf", false, "Charlie" },
+                    { "00000000-0000-0000-0000-000000000008", 0, "65b06833-3fa3-43d8-95d0-26c0f949f584", "david@example.com", true, true, false, null, "DAVID@EXAMPLE.COM", "DAVID", "AQAAAAEAACcQAAAAEOKa+htHPYvEN6cE19q8q0O6BtwmFToqMYSErw1qFst9BCO6SNTqS6Po/vFoa252IA==", null, false, "a4ed60a8-1c3d-462a-a4ca-bb5600d2fff3", false, "David" },
+                    { "00000000-0000-0000-0000-000000000009", 0, "c7434fa4-2b0b-41cb-b05d-b7dbc62d72c5", "eva@example.com", true, true, false, null, "EVA@EXAMPLE.COM", "EVA", "AQAAAAEAACcQAAAAEAVSQ54bAZQwvb+4Kh2gb4Z3NyHzk8GiLdm1bvcWjrsLffnzweDwSnLogGqbbbL6hg==", null, false, "6e3f3940-fa3b-4eab-bdf8-e5bbc6e6ce41", false, "Eva" },
+                    { "00000000-0000-0000-0000-000000000010", 0, "49e9fd59-3be5-4ff8-a14b-df9b2a2b4b38", "fiona@example.com", true, true, false, null, "FIONA@EXAMPLE.COM", "FIONA", "AQAAAAEAACcQAAAAEMqCzZyaWxzb/gk9FGJ0nNii6iauY/dyztL4i6jrXUVyyq9cAiWGpQHlSnNlbcP8CA==", null, false, "e9416f0f-fbbf-41fc-9484-62f9925d64f8", false, "Fiona" }
                 });
 
             migrationBuilder.InsertData(
