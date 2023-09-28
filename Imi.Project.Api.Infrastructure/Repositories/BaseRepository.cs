@@ -1,4 +1,5 @@
-﻿using Imi.Project.Api.Core.Infrastructure;
+﻿using Imi.Project.Api.Core.Entities;
+using Imi.Project.Api.Core.Infrastructure;
 using Imi.Project.Api.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Imi.Project.Api.Infrastructure.Repositories;
 
-public class BaseRepository<T> : IBaseRepository<T> where T : class
+public class BaseRepository<T> : IBaseRepository<T> where T : BaseEntity
 {
     protected readonly RecipesDbContext _dbContext;
 
@@ -29,7 +30,7 @@ public class BaseRepository<T> : IBaseRepository<T> where T : class
 
     public virtual async Task<T> GetByIdAsync(Guid id)
     {
-        return await _dbContext.Set<T>().SingleOrDefaultAsync(t => t.Equals(id));
+        return await _dbContext.Set<T>().SingleOrDefaultAsync(t => t.Id == id);
     }
 
     public virtual async Task<T> AddAsync(T entity)

@@ -19,6 +19,15 @@ public class IngredientRepository : BaseRepository<Ingredient>, IIngredientRepos
         return _dbContext.Ingredients.Include(i => i.Recipes);
     }
 
+    public override async Task<Ingredient> UpdateAsync(Ingredient ingredient)
+    {
+        if (ingredient != null) _dbContext.Set<Ingredient>().Update(ingredient);
+
+        await _dbContext.SaveChangesAsync();
+
+        return ingredient;
+    }
+
     public async Task<IEnumerable<Ingredient>> SearchAsync(string search)
     {
         var ingredients = await GetAll()
