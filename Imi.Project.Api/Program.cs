@@ -4,6 +4,7 @@ using Imi.Project.Api.Core.Services;
 using Imi.Project.Api.Core.Services.Interfaces;
 using Imi.Project.Api.Infrastructure.Data;
 using Imi.Project.Api.Infrastructure.Repositories;
+using Imi.Project.Api.Schemas;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -57,6 +58,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(option =>
 {
     option.SwaggerDoc("v1", new OpenApiInfo { Title = "Creative Recipes API", Version = "v1" });
+    option.SchemaFilter<SwaggerIngredientSchema>();
+    option.SchemaFilter<SwaggerUserRegisterSchema>();
     option.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
         In = ParameterLocation.Header,
