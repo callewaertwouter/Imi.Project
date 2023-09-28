@@ -10,6 +10,6 @@ public class RecipeResponseDto
     public Guid Id { get; set; }
     public string Title { get; set; }
     public string Description { get; set; }
-    public ICollection<IngredientResponseDto> Ingredients { get; set; }
-    public UserResponseDto MadeByUser { get; set; }
+    public ICollection<ControllerIngredientResponseDto> Ingredients { get; set; }
+    public ControllerUserResponseDto MadeByUser { get; set; }
 }
