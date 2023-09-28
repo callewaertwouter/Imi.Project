@@ -1,4 +1,5 @@
-﻿using Imi.Project.Api.Core.DTOs.User;
+﻿using Imi.Project.Api.Core.DTOs.Recipe;
+using Imi.Project.Api.Core.DTOs.User;
 using Imi.Project.Api.Core.Entities;
 using Imi.Project.Api.Core.Infrastructure;
 using Microsoft.AspNetCore.Authorization;
@@ -43,7 +44,8 @@ public class UsersController : ControllerBase
         User newUser = new User
         {
             Email = registration.Email,
-            UserName = registration.Email
+            UserName = registration.UserName,
+            HasApprovedTermsAndConditions = registration.HasApprovedTermsAndConditions
         };
 
         IdentityResult result = await _userManager.CreateAsync(newUser, registration.Password);
@@ -74,12 +76,17 @@ public class UsersController : ControllerBase
     [HttpPost("login")]
     public async Task<ActionResult> Login([FromBody] LoginUserRequestDto login)
     {
-        var result = await _signInManager.PasswordSignInAsync(login.Email,
-                                                              login.Password,
-                                                              isPersistent: false,
-                                                              lockoutOnFailure: false);
+        var userName = await _userManager.FindByEmailAsync(login.Email);
+
+        var result = await _signInManager.PasswordSignInAsync(
+            userName != null ? userName.UserName : login.Email,
+            login.Password,
+            isPersistent: false,
+            lockoutOnFailure: false
+        );
 
         if (!result.Succeeded) return Unauthorized();
+
 
         var applicationUser = await _userManager.FindByEmailAsync(login.Email);
         JwtSecurityToken token = await GenerateTokenAsync(applicationUser); //defined
@@ -146,7 +153,8 @@ public class UsersController : ControllerBase
         var userDto = new UserResponseDto
         {
             Id = Guid.Parse(user.Id),
-            Email = user.Email
+            Email = user.Email,
+            HasAcceptedTermsAndConditions = user.HasApprovedTermsAndConditions
         };
 
         return Ok(userDto);
