@@ -60,6 +60,7 @@ builder.Services.AddSwaggerGen(option =>
     option.SwaggerDoc("v1", new OpenApiInfo { Title = "Creative Recipes API", Version = "v1" });
     option.SchemaFilter<SwaggerIngredientSchema>();
     option.SchemaFilter<SwaggerUserRegisterSchema>();
+    option.SchemaFilter<SwaggerUserLoginSchema>();
     option.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
         In = ParameterLocation.Header,
