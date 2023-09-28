@@ -1,5 +1,4 @@
-﻿using Imi.Project.Api.Core.DTOs.Recipe;
-using Imi.Project.Api.Core.DTOs.User;
+﻿using Imi.Project.Api.Core.DTOs.User;
 using Imi.Project.Api.Core.Entities;
 using Imi.Project.Api.Core.Infrastructure;
 using Microsoft.AspNetCore.Authorization;
@@ -12,6 +11,8 @@ using System.Text;
 
 namespace Imi.Project.Api.Controllers;
 
+[Authorize]
+[AllowAnonymous]
 [Route("api/[controller]")]
 [ApiController]
 public class UsersController : ControllerBase
@@ -69,7 +70,7 @@ public class UsersController : ControllerBase
                                          new Claim("email",
                                          registration.Email));
 
-        return Ok();
+        return Ok("User successfully registered.");
     }
 
     [AllowAnonymous]

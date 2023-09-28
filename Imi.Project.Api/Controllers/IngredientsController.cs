@@ -6,7 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Imi.Project.Api.Controllers
 {
-    //[Authorize]
+    [Authorize]
+    [AllowAnonymous]
     [Route("api/[controller]")]
     [ApiController]
     public class IngredientsController : ControllerBase
