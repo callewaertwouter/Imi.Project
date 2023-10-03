@@ -39,7 +39,7 @@ namespace Imi.Project.Api.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return BadRequest(ModelState.Values);
+                return BadRequest(ModelState);
             }
 
             var ingredientEntity = new Ingredient

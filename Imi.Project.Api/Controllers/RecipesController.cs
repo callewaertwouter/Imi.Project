@@ -15,10 +15,13 @@ namespace Imi.Project.Api.Controllers;
 public class RecipesController : ControllerBase
 {
     protected readonly IRecipeRepository _recipeRepository;
+    protected readonly IIngredientRepository _ingredientRepository;
 
-    public RecipesController(IRecipeRepository recipeRepository)
+    public RecipesController(IRecipeRepository recipeRepository, 
+                             IIngredientRepository ingredientRepository)
     {
         _recipeRepository = recipeRepository;
+        _ingredientRepository = ingredientRepository;
     }
 
     [HttpGet]
@@ -90,10 +93,39 @@ public class RecipesController : ControllerBase
             Description = recipeDto.Description
         };
 
+        var associatedIngredients = new List<Ingredient>();
+
+        if (recipeDto.ListOfIngredients != null && recipeDto.ListOfIngredients.Any())
+        {
+            foreach (var ingredientDto in recipeDto.ListOfIngredients)
+            {
+                var existingIngredient = await _ingredientRepository.GetByNameAsync(ingredientDto.Name);
+
+                if (existingIngredient != null)
+                {
+                    associatedIngredients.Add(existingIngredient);
+                }
+                else
+                {
+                    var newIngredient = new Ingredient
+                    {
+                        Name = ingredientDto.Name,
+                        Quantity = ingredientDto.Quantity,
+                        MeasureUnit = ingredientDto.MeasureUnit,
+                    };
+
+                    await _ingredientRepository.AddAsync(newIngredient);
+                    associatedIngredients.Add(newIngredient);
+                }
+            }
+        }
+
+        recipeEntity.Ingredients = associatedIngredients;
         await _recipeRepository.AddAsync(recipeEntity);
 
-        return Ok("Recipe added sucessfully.");
+        return Ok("Recipe added successfully.");
     }
+
 
     [HttpPut]
     public async Task<IActionResult> Update(RecipeRequestDto recipeDto)
@@ -113,7 +145,7 @@ public class RecipesController : ControllerBase
         recipeEntity.Title = recipeDto.Title;
         recipeEntity.Description = recipeDto.Description;
 
-        // Update the ingedrients.
+        // Update the ingedrients
         recipeEntity.Ingredients = recipeDto.ListOfIngredients.Select(i => new Ingredient
         {
             Name = i.Name
