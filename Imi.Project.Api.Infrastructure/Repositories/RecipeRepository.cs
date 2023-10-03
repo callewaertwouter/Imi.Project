@@ -35,6 +35,11 @@ public class RecipeRepository : BaseRepository<Recipe>, IRecipeRepository
         return recipe;
     }
 
+    public async Task<Recipe> GetByTitleAsync(string title)
+    {
+        return await _dbContext.Set<Recipe>().SingleOrDefaultAsync(r => r.Title == title);
+    }
+
     public async Task<IEnumerable<Recipe>> SearchAsync(string search)
     {
         var recipes = await GetAll()
@@ -43,4 +48,6 @@ public class RecipeRepository : BaseRepository<Recipe>, IRecipeRepository
 
         return recipes;
     }
+
+
 }

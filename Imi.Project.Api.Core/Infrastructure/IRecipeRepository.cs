@@ -6,5 +6,6 @@ namespace Imi.Project.Api.Core.Infrastructure;
 
 public interface IRecipeRepository : IBaseRepository<Recipe>
 {
+    Task<Recipe> GetByTitleAsync(string title);
     Task<IEnumerable<Recipe>> SearchAsync(string search);
 }

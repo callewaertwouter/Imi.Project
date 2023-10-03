@@ -27,6 +27,10 @@ public class IngredientRepository : BaseRepository<Ingredient>, IIngredientRepos
 
         return ingredient;
     }
+    public async Task<Ingredient> GetByNameAsync(string name)
+    {
+        return await _dbContext.Set<Ingredient>().SingleOrDefaultAsync(i => i.Name == name);
+    }
 
     public async Task<IEnumerable<Ingredient>> SearchAsync(string search)
     {
@@ -36,4 +40,6 @@ public class IngredientRepository : BaseRepository<Ingredient>, IIngredientRepos
 
         return ingredients;
     }
+
+
 }
