@@ -3,7 +3,6 @@ using Imi.Project.Api.Core.DTOs.Ingredient;
 using Imi.Project.Api.Core.Entities;
 using Imi.Project.Api.Core.Infrastructure;
 using Moq;
-using Xunit;
 
 namespace Imi.Project.Tests.Pri.Api.Controllers;
 
