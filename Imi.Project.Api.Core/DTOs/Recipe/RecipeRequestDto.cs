@@ -1,4 +1,5 @@
 ﻿using Imi.Project.Api.Core.DTOs.Ingredient;
+using Imi.Project.Api.Core.DTOs.User;
 using System;
 using System.Collections.Generic;
 
@@ -10,4 +11,5 @@ public class RecipeRequestDto
     public string Title { get; set; }
     public string Description { get; set; }
     public ICollection<IngredientRequestDto> ListOfIngredients { get; set; }
+    public UserRequestDto CreatedByUser { get; set; }
 }
