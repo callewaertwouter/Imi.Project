@@ -73,14 +73,4 @@ public class UserRepository : IUserRepository
 
         return entity;
     }
-
-    public async Task<User> GetByUserNameAsync(string userName)
-    {
-        return await _dbContext.Set<User>().SingleOrDefaultAsync(u => u.UserName == userName);
-    }
-
-    public async Task<User> GetByEmailAsync(string email)
-    {
-        return await _dbContext.Set<User>().SingleOrDefaultAsync(u => u.Email == email);
-    }
 }
