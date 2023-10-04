@@ -1,6 +1,9 @@
 ﻿using Imi.Project.Api.Core.DTOs.Ingredient;
+using Imi.Project.Api.Core.DTOs.Recipe;
+using Imi.Project.Api.Core.DTOs.User;
 using Imi.Project.Api.Core.Entities;
 using Imi.Project.Api.Core.Infrastructure;
+using Imi.Project.Api.Infrastructure.Repositories;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -30,6 +33,24 @@ namespace Imi.Project.Api.Controllers
                 Quantity = r.Quantity,
                 MeasureUnit = r.MeasureUnit
             });
+
+            return Ok(ingredientDto);
+        }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> Get(Guid id)
+        {
+            var ingredient = await _ingredientRepository.GetByIdAsync(id);
+
+            if (ingredient == null) return NotFound($"No ingredient found with an id of {id}.");
+
+            var ingredientDto = new IngredientResponseDto
+            {
+                Id = ingredient.Id,
+                Name = ingredient.Name,
+                Quantity = ingredient.Quantity,
+                MeasureUnit = ingredient.MeasureUnit
+            };
 
             return Ok(ingredientDto);
         }
@@ -87,6 +108,19 @@ namespace Imi.Project.Api.Controllers
             await _ingredientRepository.DeleteAsync(ingredientEntity);
 
             return Ok("Ingredient deleted successfully.");
+        }
+
+        [HttpGet("search")]
+        public async Task<IActionResult> Search([FromQuery] string searchQuery)
+        {
+            var searchResults = await _ingredientRepository.SearchAsync(searchQuery);
+
+            var searchResultsDto = searchResults.Select(s => new SearchIngredientResponseDto
+            {
+                Name = s.Name
+            });
+
+            return Ok(searchResultsDto);
         }
     }
 }

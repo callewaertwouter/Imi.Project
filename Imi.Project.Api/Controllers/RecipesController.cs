@@ -54,10 +54,7 @@ public class RecipesController : ControllerBase
     {
         var recipe = await _recipeRepository.GetByIdAsync(id);
 
-        if (recipe == null)
-        {
-            return NotFound($"No recipe with an id of {id}.");
-        }
+        if (recipe == null) return NotFound($"No recipe with an id of {id}.");
 
         var recipeDto = new RecipeResponseDto
         {
@@ -170,5 +167,30 @@ public class RecipesController : ControllerBase
         await _recipeRepository.DeleteAsync(recipeEntity);
 
         return Ok("Recipe deleted sucessfully.");
+    }
+
+    [HttpGet("search")]
+    public async Task<IActionResult> Search([FromQuery] string searchQuery)
+    {
+        var searchResults = await _recipeRepository.SearchAsync(searchQuery);
+
+        var searchResultsDto = searchResults.Select(s => new RecipeResponseDto
+        {
+            Id = s.Id,
+            Title = s.Title,
+            Description = s.Description,
+            Ingredients = s.Ingredients.Select(i => new ControllerIngredientResponseDto
+            {
+                Name = i.Name,
+                Quantity = i.Quantity,
+                MeasureUnit = i.MeasureUnit
+            }).ToList(),
+            MadeByUser = new ControllerUserResponseDto
+            {
+                Email = s.User?.Email
+            }
+        });
+
+        return Ok(searchResultsDto);
     }
 }

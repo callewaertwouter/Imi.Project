@@ -1,4 +1,6 @@
-﻿using Imi.Project.Api.Core.DTOs.User;
+﻿using Imi.Project.Api.Core.DTOs.Ingredient;
+using Imi.Project.Api.Core.DTOs.Recipe;
+using Imi.Project.Api.Core.DTOs.User;
 using Imi.Project.Api.Core.Entities;
 using Imi.Project.Api.Core.Infrastructure;
 using Microsoft.AspNetCore.Authorization;
@@ -209,5 +211,24 @@ public class UsersController : ControllerBase
         await _userRepository.DeleteAsync(userEntity);
 
         return Ok("User successfully deleted. Farewell!");
+    }
+
+    [HttpGet("search")]
+    public async Task<IActionResult> Search([FromQuery] string searchQuery)
+    {
+        var searchResults = await _userRepository.SearchAsync(searchQuery);
+
+        var searchResultsDto = searchResults.Select(s => new UserResponseDto
+        {
+            Id = Guid.Parse(s.Id),
+            Email = s.Email,
+            HasAcceptedTermsAndConditions = s.HasApprovedTermsAndConditions,
+            Recipes = s.Recipes?.Select(r => new ControllerRecipeResponseDto
+            {
+                Title = r.Title
+            }).ToList()
+        });
+
+        return Ok(searchResultsDto);
     }
 }
