@@ -1,8 +1,8 @@
 ﻿@page "/ingredientsapi"
-@using Imi.Project.Api.Core.Entities
+@using Imi.Project.Blazor.Models.Api
 @using Imi.Project.Blazor.Services.Crud
 @using Imi.Project.Blazor.Components.Ingredient
-@inject ICRUDService<Ingredient> service;
+@inject ICRUDService<Ingredient> service
 
 <h3>Ingedrients from API</h3>
 
@@ -36,8 +36,8 @@
 
 @code {
     private Ingredient[] ingredients = new Ingredient[0];
-    private Ingredient? currentIngredient;
-    private string? error;
+    private Ingredient currentIngredient;
+    private string error;
     private bool isLoading = true;
 
     protected override async Task OnInitializedAsync()
@@ -78,11 +78,15 @@
     {
         try
         {
-            if (currentIngredient!.Id.Equals(Guid.Empty)) await service.Create(currentIngredient);
-            else await service.Update(currentIngredient);
-
-            await RefreshIngredients();
-            StateHasChanged();
+            if (currentIngredient!.Id.Equals(Guid.Empty))
+            {
+                await service.Create(currentIngredient);
+            }
+            else
+            {
+                await service.Update(currentIngredient);
+            }
+            await this.RefreshIngredients();
         }
         catch (Exception ex)
         {

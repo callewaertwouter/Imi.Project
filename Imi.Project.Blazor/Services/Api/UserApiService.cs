@@ -1,5 +1,5 @@
 ﻿using Imi.Project.Api.Core.DTOs.User;
-using Imi.Project.Api.Core.Entities;
+using Imi.Project.Blazor.Models.Api;
 using Imi.Project.Blazor.Services.Crud;
 
 namespace Imi.Project.Blazor.Services.Api;

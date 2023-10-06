@@ -1,7 +1,7 @@
 ﻿using Imi.Project.Api.Core.DTOs.Ingredient;
 using Imi.Project.Api.Core.DTOs.Recipe;
 using Imi.Project.Api.Core.DTOs.User;
-using Imi.Project.Api.Core.Entities;
+using Imi.Project.Blazor.Models.Api;
 using Imi.Project.Blazor.Services.Crud;
 
 namespace Imi.Project.Blazor.Services.Api;
@@ -27,16 +27,16 @@ public class RecipeApiService : ICRUDService<Recipe>
                 Id = dto.Id,
                 Title = dto.Title,
                 Description = dto.Description,
-                Ingredients = dto.ListOfIngredients.Select(i => new Ingredient
+                Ingredients = dto.ListOfIngredients?.Select(i => new Ingredient
                 {
                     Name = i.Name,
                     Quantity = i.Quantity,
                     MeasureUnit = i.MeasureUnit
-                }).ToList()
+                }).ToList() ?? new List<Ingredient>()
             };
         }
 
-        return new Recipe(); //TODO: Improve this.
+        return null!;
     }
 
     public async Task<IQueryable<Recipe>> GetAll()

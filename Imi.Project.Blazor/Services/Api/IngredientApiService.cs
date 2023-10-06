@@ -1,5 +1,5 @@
 ﻿using Imi.Project.Api.Core.DTOs.Ingredient;
-using Imi.Project.Api.Core.Entities;
+using Imi.Project.Blazor.Models.Api;
 using Imi.Project.Blazor.Services.Crud;
 
 namespace Imi.Project.Blazor.Services.Api;
@@ -7,7 +7,7 @@ namespace Imi.Project.Blazor.Services.Api;
 public class IngredientApiService : ICRUDService<Ingredient>
 {
     private string baseUrl = "https://localhost:5001/api/ingredients";
-    private readonly HttpClient _httpClient;
+    private readonly HttpClient _httpClient = null;
 
     public IngredientApiService(HttpClient httpClient)
     {
@@ -73,7 +73,7 @@ public class IngredientApiService : ICRUDService<Ingredient>
             Name = item.Name
         };
 
-        return _httpClient.PutAsJsonAsync($"{baseUrl}/{item.Id}", dto);
+        return _httpClient.PutAsJsonAsync<IngredientRequestDto>($"{baseUrl}/{item.Id}", dto);
     }
 
     public Task Delete(Guid id)

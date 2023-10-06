@@ -1,6 +1,6 @@
-using Imi.Project.Api.Core.Entities;
 using Imi.Project.Blazor.Models.Mocking;
 using Imi.Project.Blazor.Models;
+using Imi.Project.Blazor.Models.Api;
 using Imi.Project.Blazor.Services.Api;
 using Imi.Project.Blazor.Services.Crud;
 using MudBlazor.Services;
@@ -21,7 +21,6 @@ builder.Services.AddTransient<ICRUDService<Ingredient>, IngredientApiService>();
 builder.Services.AddMudServices();
 
 builder.Services.AddScoped<HttpClient>();
-builder.Services.AddSingleton<HttpClient>();
 
 var app = builder.Build();
 

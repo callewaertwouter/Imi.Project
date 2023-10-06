@@ -1,5 +1,5 @@
 ﻿@using Imi.Project.Blazor.Models
-@using Imi.Project.Api.Core.Entities;
+@using Imi.Project.Blazor.Models.Api
 
 <button class="btn btn-dark" @onclick="OnAdd">Add ingredient</button>
 <table class="table mt-4">
@@ -12,7 +12,7 @@
 		</tr>
 	</thead>
 	<tbody>
-		@foreach (var ingredient in Ingredients!)
+		@foreach (var ingredient in Ingredients)
 		{
 			<tr>
 				<td>
@@ -34,7 +34,7 @@
 
 @code {
 	[Parameter]
-	public Ingredient[]? Ingredients { get; set; }
+	public Ingredient[] Ingredients { get; set; }
 
 	[Parameter]
 	public EventCallback OnAdd { get; set; }

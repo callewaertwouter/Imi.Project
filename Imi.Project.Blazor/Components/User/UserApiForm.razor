@@ -1,6 +1,6 @@
 ﻿@using Imi.Project.Blazor.Models
-@using Imi.Project.Blazor.Models.Mocking;
-@using Imi.Project.Api.Core.Entities;
+@using Imi.Project.Blazor.Models.Mocking
+@using Imi.Project.Blazor.Models.Api
 
 <EditForm Model="@User" OnValidSubmit="@(e => OnSave.InvokeAsync(User))">
 	<DataAnnotationsValidator />
