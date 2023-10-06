@@ -1,0 +1,47 @@
+﻿@using Imi.Project.Blazor.Models
+@using Imi.Project.Api.Core.Entities;
+
+<button class="btn btn-dark" @onclick="OnAdd">Add ingredient</button>
+<table class="table mt-4">
+	<thead>
+		<tr>
+			<th></th>
+			<th>Id</th>
+			<th>Name</th>
+			<th></th>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach (var ingredient in Ingredients!)
+		{
+			<tr>
+				<td>
+					<button class="btn btn-warning" @onclick="e => OnEdit.InvokeAsync(ingredient)">Edit</button>
+				</td>
+				<td>
+					@ingredient.Id
+				</td>
+				<td>
+					@ingredient.Name
+				</td>
+				<td>
+					<button class="btn btn-danger" @onclick="e => OnDelete.InvokeAsync(ingredient)">Delete</button>
+				</td>
+			</tr>
+		}
+	</tbody>
+</table>
+
+@code {
+	[Parameter]
+	public Ingredient[]? Ingredients { get; set; }
+
+	[Parameter]
+	public EventCallback OnAdd { get; set; }
+
+	[Parameter]
+	public EventCallback<Ingredient> OnEdit { get; set; }
+
+	[Parameter]
+	public EventCallback<Ingredient> OnDelete { get; set; }
+}
