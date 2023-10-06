@@ -1,5 +1,4 @@
-﻿using Imi.Project.Api.Core.DTOs.Ingredient;
-using Imi.Project.Api.Core.DTOs.Recipe;
+﻿using Imi.Project.Api.Core.DTOs.Recipe;
 using Imi.Project.Api.Core.DTOs.User;
 using Imi.Project.Api.Core.Entities;
 using Imi.Project.Api.Core.Infrastructure;
@@ -14,7 +13,7 @@ using System.Text;
 namespace Imi.Project.Api.Controllers;
 
 [Authorize]
-[AllowAnonymous]
+//[AllowAnonymous]
 [Route("api/[controller]")]
 [ApiController]
 public class UsersController : ControllerBase
@@ -79,7 +78,7 @@ public class UsersController : ControllerBase
     }
 
     [AllowAnonymous]
-    [HttpPost("login")]
+    [HttpPost("api/auth/login")]
     public async Task<ActionResult> Login([FromBody] LoginUserRequestDto login)
     {
         var userName = await _userManager.FindByEmailAsync(login.Email);
@@ -132,6 +131,7 @@ public class UsersController : ControllerBase
         return token;
     }
 
+    [AllowAnonymous]
     [HttpGet("api/auth/logout")]
     public async Task<IActionResult> Logout()
     {
@@ -154,6 +154,7 @@ public class UsersController : ControllerBase
         return Ok(usersDto);
     }
 
+    [Authorize(Roles = "Admin")]
     [HttpGet("{id}")]
     public async Task<IActionResult> Get(Guid id)
     {
@@ -198,6 +199,7 @@ public class UsersController : ControllerBase
         return Ok("User successfully updated.");
     }
 
+    [Authorize(Roles = "Admin")] // I see deleting as a form of "banning" someone so for now only Admins can do this
     [HttpDelete("{id}")]
     public async Task<IActionResult> Delete(Guid id)
     {
