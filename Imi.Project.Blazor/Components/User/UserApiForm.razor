@@ -1,0 +1,29 @@
+﻿@using Imi.Project.Blazor.Models
+@using Imi.Project.Blazor.Models.Mocking;
+@using Imi.Project.Api.Core.Entities;
+
+<EditForm Model="@User" OnValidSubmit="@(e => OnSave.InvokeAsync(User))">
+	<DataAnnotationsValidator />
+	<ValidationSummary />
+
+<div class="form-group">
+	<label for="email">Title: </label>
+	<InputText id="name" class="form-control" @bind-Value="User.Email" />
+	<ValidationMessage For="@(() => User.Email)" />
+</div>
+
+<button type="submit" class="btn btn-primary">Save</button>
+<button type="button" class="btn btn-warning" @onclick="OnCancel">Cancel</button>
+
+</EditForm>
+
+@code {
+	[Parameter]
+	public User User { get; set; }
+
+	[Parameter]
+	public EventCallback<User> OnSave { get; set; }
+
+	[Parameter]
+	public EventCallback OnCancel { get; set; }
+}

@@ -1,0 +1,47 @@
+﻿@using Imi.Project.Blazor.Models
+@using Imi.Project.Api.Core.Entities;
+
+<button class="btn btn-dark" @onclick="OnAdd">Add user</button>
+<table class="table mt-4">
+	<thead>
+		<tr>
+			<th></th>
+			<th>Id</th>
+			<th>Name</th>
+			<th></th>
+		</tr>
+	</thead>
+	<tbody>
+		@foreach (var user in Users)
+		{
+			<tr>
+				<td>
+					<button class="btn btn-warning" @onclick="e => OnEdit.InvokeAsync(user)">Edit</button>
+				</td>
+				<td>
+					@user.Id
+				</td>
+				<td>
+					@user.Email
+				</td>
+				<td>
+					<button class="btn btn-danger" @onclick="e => OnDelete.InvokeAsync(user)">Delete</button>
+				</td>
+			</tr>
+		}
+	</tbody>
+</table>
+
+@code {
+	[Parameter]
+	public User[] Users { get; set; }
+
+	[Parameter]
+	public EventCallback OnAdd { get; set; }
+
+	[Parameter]
+	public EventCallback<User> OnEdit { get; set; }
+
+	[Parameter]
+	public EventCallback<User> OnDelete { get; set; }
+}
