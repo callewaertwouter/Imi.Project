@@ -81,7 +81,7 @@
             if (currentIngredient!.Id.Equals(Guid.Empty)) await service.Create(currentIngredient);
             else await service.Update(currentIngredient);
 
-            await this.RefreshIngredients();
+            await RefreshIngredients();
             StateHasChanged();
         }
         catch (Exception ex)

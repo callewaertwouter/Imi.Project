@@ -62,9 +62,18 @@ public class IngredientApiService : ICRUDService<Ingredient>
         return _httpClient.PostAsJsonAsync($"{baseUrl}", dto);
     }
 
+    //TODO: Figure out why ingredients aren't updating.
+    /*
+     This functions works properly but on the IngredientsApi.razor page once the code reaches RefreshIngredients, it goes back to the old name.
+     */
     public Task Update(Ingredient item)
     {
-        return _httpClient.PutAsJsonAsync($"{baseUrl}/{item.Id}", item);
+        var dto = new IngredientRequestDto
+        {
+            Name = item.Name
+        };
+
+        return _httpClient.PutAsJsonAsync($"{baseUrl}/{item.Id}", dto);
     }
 
     public Task Delete(Guid id)
