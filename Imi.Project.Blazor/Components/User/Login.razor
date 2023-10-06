@@ -1,0 +1,65 @@
+﻿@using Imi.Project.Api.Core.DTOs.User
+@using System.Net.Http;
+@using System.Net.Http.Json;
+@using Newtonsoft.Json;
+@inject HttpClient httpClient
+@page "/login"  
+
+<h3>Login</h3>
+
+@if (errorMessage != null)
+{
+    <p>@errorMessage</p>
+}
+
+<form>
+    <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" class="form-control" id="email" @bind="email">
+    </div>
+    <div class="form-group">
+        <label for="password">Password</label>
+        <input type="password" class="form-control" id="password" @bind="password">
+    </div>
+    <button type="submit" class="btn btn-primary" @onclick="LoginUser">Login</button>
+</form>
+
+@code {
+    private string email;
+    private string password;
+    private string errorMessage;
+
+    private async Task LoginUser()
+    {
+        var loginModel = new LoginUserRequestDto
+            {
+                Email = email,
+                Password = password
+            };
+
+        try
+        {
+            var response = await httpClient.PostAsJsonAsync("api/Users/api/auth/login", loginModel);
+            response.EnsureSuccessStatusCode();
+
+            // Assuming the response contains a JSON object with a "token" property
+            var responseBody = await response.Content.ReadAsStringAsync();
+            var loginResponse = JsonConvert.DeserializeObject<LoginUserResponseDto>(responseBody);
+
+            // Extract the token from the login response
+            var token = loginResponse!.Token;
+
+            // Store the token securely (e.g., in localStorage or sessionStorage)
+            // For example, storing in localStorage:
+            //localStorage.SetItem("token", token);
+
+            // You can also perform other actions like redirection upon successful login
+            // ...
+        }
+        catch (HttpRequestException)
+        {
+            // Handle login errors
+            errorMessage = "Failed to log in. Please try again.";
+        }
+    }
+}
