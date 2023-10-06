@@ -1,0 +1,108 @@
+﻿@page "/usersapi"
+@using Imi.Project.Blazor.Models
+@using Imi.Project.Api.Core.Entities;
+@using Imi.Project.Blazor.Services.Crud
+@using Imi.Project.Blazor.Components.User
+@using Microsoft.AspNetCore.Identity
+@inject ICRUDService<User> service;
+@*@inject UserManager<User> userManager;*@
+
+<h3>Users from API</h3>
+
+<div class="mt-3">
+    @if (isLoading)
+    {
+        <p>Loading...</p>
+    }
+    else if (!string.IsNullOrEmpty(error))
+    {
+        <div class="alert alert-danger">
+            @error
+        </div>
+    }
+
+    else if (currentUser == null)
+    {
+        <UserApiList Users="users"
+                 OnAdd="AddUser"
+                 OnEdit="EditUser"
+                 OnDelete="DeleteUser">
+        </UserApiList>
+    }
+    else
+    {
+        <UserApiForm User="currentUser"
+                 OnSave="SaveUser"
+                 OnCancel="RefreshUsers">
+        </UserApiForm>
+    }
+</div>
+
+@code {
+    private User[] users = new User[0];
+    private User? currentUser;
+    private string? error;
+    private bool isLoading = true;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await RefreshUsers();
+    }
+
+    public async Task RefreshUsers()
+    {
+        isLoading = true;
+
+        try
+        {
+            users = (await service.GetAll()).ToArray();
+            this.currentUser = null;
+        }
+        catch (Exception ex)
+        {
+            this.error = ex.Message;
+        }
+        finally
+        {
+            isLoading = false;
+        }
+    }
+
+    public void AddUser()
+    {
+        this.currentUser = new User();
+    }
+
+    public async Task EditUser(User item)
+    {
+        this.currentUser = await service.Get(Guid.Parse(item.Id));
+    }
+
+    public async Task SaveUser(User item)
+    {
+        try
+        {
+            if (currentUser.Id.Equals(Guid.Empty)) await service.Create(currentUser);
+            else await service.Update(currentUser);
+
+            await this.RefreshUsers();
+        }
+        catch (Exception ex)
+        {
+            this.error = ex.Message;
+        }
+    }
+
+    public async Task DeleteUser(User item)
+    {
+        try
+        {
+            await service.Delete(Guid.Parse(item.Id));
+            await this.RefreshUsers();
+        }
+        catch (Exception ex)
+        {
+            this.error = ex.Message;
+        }
+    }
+}

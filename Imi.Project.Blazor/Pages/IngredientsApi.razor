@@ -1,0 +1,105 @@
+﻿@page "/ingredientsapi"
+@using Imi.Project.Api.Core.Entities
+@using Imi.Project.Blazor.Services.Crud
+@using Imi.Project.Blazor.Components.Ingredient
+@inject ICRUDService<Ingredient> service;
+
+<h3>Ingedrients from API</h3>
+
+<div class="mt-3">
+    @if (isLoading)
+    {
+        <p>Loading...</p>
+    }
+    else if (!string.IsNullOrEmpty(error))
+    {
+        <div class="alert alert-danger">
+            @error
+        </div>
+    }
+    else if (currentIngredient == null)
+    {
+        <IngredientApiList Ingredients="ingredients"
+                       OnAdd="AddIngredient"
+                       OnEdit="EditIngredient"
+                       OnDelete="DeleteIngredient">
+        </IngredientApiList>
+    }
+    else
+    {
+        <IngredientApiForm Ingredient="currentIngredient"
+                       OnSave="SaveIngredient"
+                       OnCancel="RefreshIngredients">
+        </IngredientApiForm>
+    }
+</div>
+
+@code {
+    private Ingredient[] ingredients = new Ingredient[0];
+    private Ingredient? currentIngredient;
+    private string? error;
+    private bool isLoading = true;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await RefreshIngredients();
+    }
+
+    public async Task RefreshIngredients()
+    {
+        isLoading = true;
+
+        try
+        {
+            ingredients = (await service.GetAll()).ToArray();
+            this.currentIngredient = null;
+        }
+        catch (Exception ex)
+        {
+            this.error = ex.Message;
+        }
+        finally
+        {
+            isLoading = false;
+        }
+    }
+
+    public void AddIngredient()
+    {
+        this.currentIngredient = new Ingredient();
+    }
+
+    public async Task EditIngredient(Ingredient item)
+    {
+        this.currentIngredient = await service.Get(item.Id);
+    }
+
+    public async Task SaveIngredient(Ingredient item)
+    {
+        try
+        {
+            if (currentIngredient!.Id.Equals(Guid.Empty)) await service.Create(currentIngredient);
+            else await service.Update(currentIngredient);
+
+            await this.RefreshIngredients();
+            StateHasChanged();
+        }
+        catch (Exception ex)
+        {
+            this.error = ex.Message;
+        }
+    }
+
+    public async Task DeleteIngredient(Ingredient item)
+    {
+        try
+        {
+            await service.Delete(item.Id);
+            await this.RefreshIngredients();
+        }
+        catch (Exception ex)
+        {
+            this.error = ex.Message;
+        }
+    }
+}

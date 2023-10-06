@@ -1,0 +1,94 @@
+﻿@page "/ingredients"
+@using Imi.Project.Api.Core.Entities
+@using Imi.Project.Blazor.Services.Crud
+@using Imi.Project.Blazor.Components.Ingredient
+@inject ICRUDService<MockIngredient> service;
+
+<h3>ingredients</h3>
+
+<div class="mt-3">
+    @if (!string.IsNullOrEmpty(error))
+    {
+        <div class="alert alert-danger">
+            @error
+        </div>
+    }
+
+    @if (currentIngredient == null)
+    {
+        <IngredientList Ingredients="ingredients"
+                    OnAdd="AddIngredient"
+                    OnEdit="EditIngredient"
+                    OnDelete="DeleteIngredient">
+        </IngredientList>
+    }
+    else
+    {
+        <IngredientForm ingredient="currentIngredient"
+                    OnSave="SaveIngredient"
+                    OnCancel="RefreshIngredients">
+        </IngredientForm>
+    }
+</div>
+
+@code {
+    private MockIngredient[]? ingredients;
+    private MockIngredient? currentIngredient;
+    private string? error;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await RefreshIngredients();
+    }
+
+    public async Task RefreshIngredients()
+    {
+        ingredients = (await service.GetAll()).ToArray();
+        this.currentIngredient = null;
+    }
+
+    public void AddIngredient()
+    {
+        this.currentIngredient = new MockIngredient();
+    }
+
+    public async Task EditIngredient(MockIngredient item)
+    {
+        this.currentIngredient = await service.Get(item.Id);
+    }
+
+    public async Task SaveIngredient(MockIngredient item)
+    {
+        try
+        {
+            if (currentIngredient.Id.Equals(Guid.Empty))
+            {
+                await service.Create(currentIngredient);
+            }
+            else
+            {
+                await service.Update(currentIngredient);
+            }
+
+            await RefreshIngredients();
+        }
+        catch (Exception ex)
+        {
+            this.error = ex.Message;
+        }
+    }
+
+
+    public async Task DeleteIngredient(MockIngredient item)
+    {
+        try
+        {
+            await service.Delete(item.Id);
+            await this.RefreshIngredients();
+        }
+        catch (Exception ex)
+        {
+            this.error = ex.Message;
+        }
+    }
+}

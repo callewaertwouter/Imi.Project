@@ -1,0 +1,87 @@
+﻿@page "/recipes"
+@using Imi.Project.Api.Core.Entities
+@using Imi.Project.Blazor.Services.Crud
+@using Imi.Project.Blazor.Components.Recipe
+@inject ICRUDService<MockRecipe> service;
+
+<h3>Recipes</h3>
+
+<div class="mt-3">
+    @if (!string.IsNullOrEmpty(error))
+    {
+        <div class="alert alert-danger">
+            @error
+        </div>
+    }
+
+    @if (currentRecipe == null)
+    {
+        <RecipeList Recipes="recipes"
+                    OnAdd="AddRecipe"
+                    OnEdit="EditRecipe"
+                    OnDelete="DeleteRecipe">
+        </RecipeList>
+    }
+    else
+    {
+        <RecipeForm Recipe="currentRecipe"
+                    OnSave="SaveRecipe"
+                    OnCancel="RefreshRecipes">
+        </RecipeForm>
+    }
+</div>
+
+@code {
+    private MockRecipe[]? recipes;
+    private MockRecipe? currentRecipe;
+    private string? error;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await RefreshRecipes();
+    }
+
+    public async Task RefreshRecipes()
+    {
+        recipes = (await service.GetAll()).ToArray();
+        this.currentRecipe = null;
+    }
+
+    public void AddRecipe()
+    {
+        this.currentRecipe = new MockRecipe();
+    }
+
+    public async Task EditRecipe(MockRecipe item)
+    {
+        this.currentRecipe = await service.Get(item.Id);
+    }
+
+    public async Task SaveRecipe(MockRecipe item)
+    {
+        try
+        {
+            if (currentRecipe.Id.Equals(Guid.Empty)) await service.Create(currentRecipe);
+            else await service.Update(currentRecipe);
+
+            await this.RefreshRecipes();
+        }
+        catch (Exception ex)
+        {
+            this.error = ex.Message;
+        }
+    }
+
+    public async Task DeleteRecipe(MockRecipe item)
+    {
+        try
+        {
+            await service.Delete(item.Id);
+            await this.RefreshRecipes();
+        }
+        catch (Exception ex)
+        {
+            this.error = ex.Message;
+        }
+    }
+}

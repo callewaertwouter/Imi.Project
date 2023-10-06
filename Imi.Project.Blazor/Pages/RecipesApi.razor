@@ -1,0 +1,105 @@
+﻿@page "/recipesapi"
+@using Imi.Project.Api.Core.Entities
+@using Imi.Project.Blazor.Services.Crud
+@using Imi.Project.Blazor.Components.Recipe
+@inject ICRUDService<Recipe> service;
+
+<h3>Recipes from API</h3>
+
+<div class="mt-3">
+    @if (isLoading)
+    {
+        <p>Loading...</p>
+    }
+    else if (!string.IsNullOrEmpty(error))
+    {
+        <div class="alert alert-danger">
+            @error
+        </div>
+    }
+
+    else if (currentRecipe == null)
+    {
+        <RecipeApiList Recipes="recipes"
+                   OnAdd="AddRecipe"
+                   OnEdit="EditRecipe"
+                   OnDelete="DeleteRecipe">
+        </RecipeApiList>
+    }
+    else
+    {
+        <RecipeApiForm Recipe="currentRecipe"
+                   OnSave="SaveRecipe"
+                   OnCancel="RefreshRecipes">
+        </RecipeApiForm>
+    }
+</div>
+
+@code {
+    private Recipe[] recipes = new Recipe[0];
+    private Recipe? currentRecipe;
+    private string? error;
+    private bool isLoading = true;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await RefreshRecipes();
+    }
+
+    public async Task RefreshRecipes()
+    {
+        isLoading = true;
+
+        try
+        {
+            recipes = (await service.GetAll()).ToArray();
+            this.currentRecipe = null;
+        }
+        catch (Exception ex)
+        {
+            this.error = ex.Message;
+        }
+        finally
+        {
+            isLoading = false;
+        }
+    }
+
+    public void AddRecipe()
+    {
+        this.currentRecipe = new Recipe();
+    }
+
+    public async Task EditRecipe(Recipe item)
+    {
+        this.currentRecipe = await service.Get(item.Id);
+    }
+
+    public async Task SaveRecipe(Recipe item)
+    {
+        try
+        {
+            if (currentRecipe.Id.Equals(Guid.Empty)) await service.Create(currentRecipe);
+            else await service.Update(currentRecipe);
+
+            await this.RefreshRecipes();
+        }
+        catch (Exception ex)
+        {
+            this.error = ex.Message;
+        }
+    }
+
+    public async Task DeleteRecipe(Recipe item)
+    {
+        try
+        {
+            await service.Delete(item.Id);
+            await this.RefreshRecipes();
+        }
+        catch (Exception ex)
+        {
+            this.error = ex.Message;
+        }
+    }
+}

@@ -1,0 +1,87 @@
+﻿@page "/users"
+@using Imi.Project.Blazor.Models
+@using Imi.Project.Blazor.Services.Crud
+@using Imi.Project.Blazor.Components.User
+@inject ICRUDService<MockUser> service;
+
+<h3>Users</h3>
+
+<div class="mt-3">
+    @if (!string.IsNullOrEmpty(error))
+    {
+        <div class="alert alert-danger">
+            @error
+        </div>
+    }
+
+    @if (currentUser == null)
+    {
+        <UserList Users="users"
+                  OnAdd="AddUser"
+                  OnEdit="EditUser"
+                  OnDelete="DeleteUser">
+        </UserList>
+    }
+    else
+    {
+        <UserForm User="currentUser"
+                  OnSave="SaveUser"
+                  OnCancel="RefreshUsers">
+        </UserForm>
+    }
+</div>
+
+@code {
+    private MockUser[]? users;
+    private MockUser? currentUser;
+    private string? error;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await RefreshUsers();
+    }
+
+    public async Task RefreshUsers()
+    {
+        users = (await service.GetAll()).ToArray();
+        this.currentUser = null;
+    }
+
+    public void AddUser()
+    {
+        this.currentUser = new MockUser();
+    }
+
+    public async Task EditUser(MockUser item)
+    {
+        this.currentUser = await service.Get(item.Id);
+    }
+
+    public async Task SaveUser(MockUser item)
+    {
+        try
+        {
+            if (currentUser.Id.Equals(Guid.Empty)) await service.Create(currentUser);
+            else await service.Update(currentUser);
+
+            await this.RefreshUsers();
+        }
+        catch (Exception ex)
+        {
+            this.error = ex.Message;
+        }
+    }
+
+    public async Task DeleteUser(MockUser item)
+    {
+        try
+        {
+            await service.Delete(item.Id);
+            await this.RefreshUsers();
+        }
+        catch (Exception ex)
+        {
+            this.error = ex.Message;
+        }
+    }
+}

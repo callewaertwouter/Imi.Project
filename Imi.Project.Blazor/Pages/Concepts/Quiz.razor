@@ -1,0 +1,36 @@
+﻿@page "/quiz"
+@using Imi.Project.Blazor.Models.Concepts
+@inherits QuizBase;
+
+<div class="container">
+	<div class="card">
+		@if (questionIndex < Questions.Count())
+		{
+			<div class="quiz-title">
+				Foodie Quiz
+			</div>
+			<div class="card-header">
+				Vraag @questionCount: @Questions[questionIndex].QuestionTitle
+			</div>
+			<div class="card-body">
+				@foreach (var choice in Questions[questionIndex].Choices)
+				{
+					<Choice Choice="@choice" OnSelectedChoice="SelectedChoice"></Choice>
+				}
+			</div>
+			<div class="text-body">
+				Klik op een antwoord om naar de volgende vraag te gaan.
+				Op het einde van de quiz krijgt u uw score te zien!
+			</div>
+		}
+		else
+		{
+			<div class="card-header">
+				Quiz voorbij!
+			</div>
+			<div class="card-body">
+				Uw score: @quizScore / @Questions.Count()
+			</div>
+		}
+	</div>
+</div>
