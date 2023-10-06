@@ -27,7 +27,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Imi.Project.Mobile", "Imi.P
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Imi.Project.Vue", "Imi.Project.Vue\Imi.Project.Vue.csproj", "{44AF898A-23F0-4435-A3D6-DCE16BF97922}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Imi.Project.Tests", "Imi.Project.Tests\Imi.Project.Tests.csproj", "{25BC6A80-9FE9-4CFE-9F63-2E56BC322FBB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Imi.Project.Tests", "Imi.Project.Tests\Imi.Project.Tests.csproj", "{25BC6A80-9FE9-4CFE-9F63-2E56BC322FBB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
