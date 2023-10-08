@@ -37,8 +37,8 @@
 
 @code {
     private Recipe[] recipes = new Recipe[0];
-    private Recipe? currentRecipe;
-    private string? error;
+    private Recipe currentRecipe;
+    private string error;
     private bool isLoading = true;
 
     protected override async Task OnInitializedAsync()

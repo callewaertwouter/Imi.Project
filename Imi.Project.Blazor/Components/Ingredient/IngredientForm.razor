@@ -7,7 +7,7 @@
 
 	<div class="form-group">
 		<label for="name">Name: </label>
-		<InputText id="name" class="form-control" @bind-Value="Ingredient!.Name" />
+		<InputText id="name" class="form-control" @bind-Value="Ingredient.Name" />
 		<ValidationMessage For="@(() => Ingredient.Name)" />
 	</div>
 
@@ -17,7 +17,7 @@
 
 @code {
 	[Parameter]
-	public MockIngredient? Ingredient { get; set; }  
+	public MockIngredient Ingredient { get; set; }  
 
 	[Parameter]
 	public EventCallback<MockIngredient> OnSave { get; set; }

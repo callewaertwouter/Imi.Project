@@ -11,7 +11,7 @@
 		</tr>
 	</thead>
 	<tbody>
-		@foreach (var ingredient in Ingredients!)
+		@foreach (var ingredient in Ingredients)
 		{
 			<tr>
 				<td>
@@ -33,7 +33,7 @@
 
 @code {
 	[Parameter]
-	public MockIngredient[]? Ingredients { get; set; }
+	public MockIngredient[] Ingredients { get; set; }
 
 	[Parameter]
 	public EventCallback OnAdd { get; set; }

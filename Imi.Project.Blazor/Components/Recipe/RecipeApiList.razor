@@ -13,7 +13,7 @@
 		</tr>
 	</thead>
 	<tbody>
-		@foreach (var recipe in Recipes!)
+		@foreach (var recipe in Recipes)
 		{
 			<tr>
 				<td>
@@ -41,10 +41,10 @@
 
 @code {
 	[Parameter]
-	public Recipe[]? Recipes { get; set; }
+	public Recipe[] Recipes { get; set; }
 
 	[Parameter]
-	public Ingredient[]? Ingredients { get; set; }
+	public Ingredient[] Ingredients { get; set; }
 
 	[Parameter]
 	public EventCallback OnAdd { get; set; }
