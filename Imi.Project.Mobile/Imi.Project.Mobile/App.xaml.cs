@@ -1,17 +1,17 @@
-﻿using System;
+﻿using FreshMvvm;
+using Imi.Project.Mobile.ViewModels;
 using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
 
 namespace Imi.Project.Mobile
 {
-    public partial class App : Application
+	public partial class App : Application
     {
         public App()
         {
             InitializeComponent();
 
-            MainPage = new MainPage();
-        }
+			MainPage = new FreshNavigationContainer(FreshPageModelResolver.ResolvePageModel<MenuViewModel>());
+		}
 
         protected override void OnStart()
         {
