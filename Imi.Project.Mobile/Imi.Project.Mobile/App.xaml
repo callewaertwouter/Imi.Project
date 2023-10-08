@@ -3,6 +3,73 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Imi.Project.Mobile.App">
     <Application.Resources>
+        <ResourceDictionary>
+            <OnPlatform x:Key="PlatformContentPagePadding" x:TypeArguments="Thickness">
+                <On Platform="Android">5, 0, 5, 0</On>
+                <On Platform="UWP">5, 0, 5, 0</On>
+            </OnPlatform>
 
+            <Color x:Key="PageBackgroundColor">#ADD8E6</Color>
+            <Color x:Key="TitleTextColor">#5A5A5A</Color>
+            <Color x:Key="NormalTextColor">#5A5A5A</Color>
+            <Color x:Key="SliderMinimumColor">#00008B</Color>
+
+            <!--Base style for all pages-->
+            <Style x:Key="BasePageStyle" TargetType="Page">
+                <Setter Property="BackgroundColor" Value="{StaticResource PageBackgroundColor}" />
+            </Style>
+
+            <!--Style for Content Pages-->
+            <Style x:Key="ContentPageStyle" TargetType="ContentPage" BasedOn="{StaticResource BasePageStyle}">
+                <Setter Property="BackgroundColor" Value="{StaticResource PageBackgroundColor}" />
+                <Setter Property="Padding" Value="{StaticResource PlatformContentPagePadding}" />
+            </Style>
+
+            <!--Style for Titles (TitleStyle is built-in by Xamarin Forms)-->
+            <Style x:Key="CustomTitleStyle" TargetType="Label" BaseResourceKey="TitleStyle">
+                <Setter Property="TextColor" Value="{StaticResource TitleTextColor}" />
+                <Setter Property="FontSize" Value="Title" />
+                <Setter Property="FontAttributes" Value="Bold" />
+            </Style>
+
+            <!--Style for Captions (CaptionStyle also built-in)-->
+            <Style x:Key="CustomCaptionStyle" TargetType="Label" BaseResourceKey="CaptionStyle">
+                <Setter Property="TextColor" Value="{StaticResource TitleTextColor}" />
+            </Style>
+
+            <!--Style for all labels (BodyStyle, yep you guessed it)-->
+            <Style TargetType="Label" BaseResourceKey="BodyStyle">
+                <Setter Property="TextColor" Value="{StaticResource NormalTextColor}" />
+            </Style>
+
+            <!--Style for buttons-->
+            <Color x:Key="StandardButtonTextColor">#D3D3D3</Color>
+            <Color x:Key="StandardButtonBackColor">#00008B</Color>
+            <Style x:Key="StandardButtonStyle" TargetType="Button">
+                <Setter Property="HorizontalOptions" Value="FillAndExpand" />
+                <Setter Property="TextColor" Value="{StaticResource StandardButtonTextColor}" />
+                <Setter Property="BackgroundColor" Value="{StaticResource StandardButtonBackColor}" />
+                <Setter Property="CornerRadius" Value="15" />
+                <Setter Property="Margin" Value="8, 1, 8, 1" />
+            </Style>
+
+            <!--Style for Cancel/Back buttons-->
+            <Color x:Key="BackButtonTextColor">#FFFFFF</Color>
+            <Color x:Key="BackButtonBackColor">#7D1211</Color>
+            <Style x:Key="BackButtonStyle" TargetType="Button">
+                <Setter Property="HorizontalOptions" Value="CenterAndExpand" />
+                <Setter Property="TextColor" Value="{StaticResource BackButtonTextColor}" />
+                <Setter Property="BackgroundColor" Value="{StaticResource BackButtonBackColor}" />
+            </Style>
+
+            <!--Style for listviews-->
+            <Color x:Key="ListViewTextColor">#000000</Color>
+            <Color x:Key="ListViewBackColor">#FFFFFF</Color>
+            <Style x:Key="ListViewStyle" TargetType="ListView">
+                <Setter Property="ItemsSource" Value="{StaticResource ListViewTextColor}" />
+                <Setter Property="BackgroundColor" Value="{StaticResource ListViewBackColor}" />
+            </Style>
+
+        </ResourceDictionary>
     </Application.Resources>
 </Application>
