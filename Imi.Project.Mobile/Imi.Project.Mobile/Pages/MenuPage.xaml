@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:views="clr-namespace:Imi.Project.Mobile.Pages" 
+             xmlns:viewmodels="clr-namespace:Imi.Project.Mobile.ViewModels" 
+             x:DataType="viewmodels:MenuViewModel"
+             x:Class="Imi.Project.Mobile.Pages.MenuPage"
+             Style="{StaticResource ContentPageStyle}">
+    <ContentPage.Content>
+        <StackLayout HorizontalOptions="Center" VerticalOptions="Center">
+            <Button x:Name="btnCreateRecipe" Text="Recept maken" Style="{StaticResource StandardButtonStyle}" Command="{Binding OpenRecipeCreationPageCommand}" />
+            <Button x:Name="btnMyRecipes" Text="Mijn recepten" Style="{StaticResource StandardButtonStyle}" Command="{Binding OpenMyRecipesPageCommand}" />
+            <Button x:Name="btnViewRecipes" Text="Bekijk alle recepten" Style="{StaticResource StandardButtonStyle}" Command="{Binding OpenRecipesPageCommand}" />
+            <Button x:Name="btnViewRecipesExternal" Text="TheMealDb (Engels)" Style="{StaticResource StandardButtonStyle}" Command="{Binding OpenTheMealDbPageCommand}" />
+            <Button x:Name="btnQuit" Text="Afsluiten" Style="{StaticResource StandardButtonStyle}" Command="{Binding CloseAppPageCommand}" />
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
