@@ -4,9 +4,9 @@ using Xamarin.Forms.Xaml;
 namespace Imi.Project.Mobile.Pages
 {
 	[XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class RecipesPage : ContentPage
+	public partial class LoginPage : ContentPage
 	{
-		public RecipesPage()
+		public LoginPage()
 		{
 			InitializeComponent();
 		}
