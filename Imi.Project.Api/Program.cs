@@ -34,6 +34,8 @@ builder.Services.AddIdentity<User, IdentityRole>(options => {
 .AddRoles<IdentityRole>()
 .AddEntityFrameworkStores<RecipesDbContext>();
 
+builder.WebHost.UseUrls("https://0.0.0.0:5000", "https://0.0.0.0:5001");
+
 builder.Services.AddCors();
 
 builder.Services.AddControllers();
